@@ -24,7 +24,7 @@ app.post('/api/payment', (req, res, next) => {
             if (err) return res.sendStatus(500);
             else return res.sendStatus(200);
         }
-    )
+    );
 });
 
 app.listen(PORT, _ => { console.log(`Listening on ${PORT}.`)});
