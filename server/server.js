@@ -13,8 +13,6 @@ app.use(bodyParser.json());
 app.post('/api/payment', (req, res, next) => {
     const amountArray = req.body.amount.toString().split('');
     const convertedAmt = joesPennyFunction(amountArray);
-    console.log('convertedAmt', convertedAmt);
-
     const charge = stripe.charges.create(
         {
             amount: convertedAmt,
