@@ -2,7 +2,7 @@ const express = require('express')
     , bodyParser = require('body-parser')
     , cors = require('cors')
     , stripe = require('stripe')
-    , app = express();
+    , app = module.exports = express();
 
 app.use(cors());
 app.use(bodyParser.json());
