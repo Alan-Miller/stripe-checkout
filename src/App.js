@@ -11,8 +11,8 @@ class App extends Component {
     console.log('token', token);
     token.card = void 0;
     const amount = 999;
-    axios.post('/api/payment', {token, amount})
-    .then(response => { console.log('payment response', response) });
+    axios.post('/api/payment', { token, amount })
+      .then(charge => { console.log('charge response', charge.data) });
   }
 
   render() {
@@ -26,7 +26,8 @@ class App extends Component {
         <StripeCheckout
           token={this.onToken}
           stripeKey={stripePublicKey}
-          amount={999} />
+          amount={999}
+        />
       </div>
     );
   }

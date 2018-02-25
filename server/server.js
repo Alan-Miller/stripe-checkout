@@ -1,14 +1,13 @@
 require('dotenv').config();
+const { SERVER_PORT, STRIPE_PRIVATE_KEY } = process.env;
 const express = require('express')
     , bodyParser = require('body-parser')
-    , cors = require('cors')
-    , stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY)
-    , { joesPennyFunction } = require('./pennyConverter')
-    , PORT = process.env.PORT
-    , app = module.exports = express();
+    , stripe = require('stripe')(STRIPE_PRIVATE_KEY);
+const { joesPennyFunction } = require('./pennyConverter');
+const app = module.exports = express();
 
-app.use(cors());
 app.use(bodyParser.json());
+app.use(express.static(`${__dirname}/../build`));
 
 app.post('/api/payment', (req, res, next) => {
     const amountArray = req.body.amount.toString().split('');
@@ -22,9 +21,12 @@ app.post('/api/payment', (req, res, next) => {
         },
         function(err, charge) {
             if (err) return res.sendStatus(500);
-            else return res.sendStatus(200);
+            else return res.status(200).send(charge);
         }
     );
 });
 
-app.listen(PORT, _ => { console.log(`Listening on ${PORT}.`)});
+// const path = require('path');
+// app.get('*', (req, res) => { res.sendFile(path.join(__dirname, '../build/index.html')); });
+
+app.listen(SERVER_PORT, () => { console.log(`Listening on ${SERVER_PORT}.`) });
