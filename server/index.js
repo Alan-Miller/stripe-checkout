@@ -3,18 +3,15 @@ const { SERVER_PORT, STRIPE_PRIVATE_KEY } = process.env;
 const express = require('express')
     , bodyParser = require('body-parser')
     , stripe = require('stripe')(STRIPE_PRIVATE_KEY);
-const { joesPennyFunction } = require('./pennyConverter');
 const app = module.exports = express();
 
 app.use(bodyParser.json());
 app.use(express.static(`${__dirname}/../build`));
 
 app.post('/api/payment', (req, res, next) => {
-    const amountArray = req.body.amount.toString().split('');
-    const convertedAmt = joesPennyFunction(amountArray);
     const charge = stripe.charges.create(
         {
-            amount: convertedAmt,
+            amount: req.body.amount,
             currency: 'usd',
             source: req.body.token.id,
             description: 'Stripe Checkout test charge'
