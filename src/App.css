@@ -1,5 +1,9 @@
 .App {
   text-align: center;
+  position: relative;
+  background-color: rgba(89, 179, 179, 1.00);
+  height: 100vh;
+  width: 100vw;
 }
 
 .logo {
@@ -10,15 +14,50 @@
 .header {
   background-color: #222;
   height: 150px;
+  width: 100vw;
   padding: 20px;
   color: white;
+  position: fixed;
 }
 
 .welcome {
-  font-size: 1.5em;
+  font-size: 2em;
 }
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+.pants, .shirt {
+  height: 300px;
+  width: 300px;
+  background: rgba(249, 140, 85, 1.00);
+  cursor: pointer;
+  margin: 20px;
+  background-size: cover;
+  font-size: 1.4em;
+  border-radius: 50%;
+  border: thick solid black;
+}
+.pants span, .shirt span {
+  position: absolute;
+  top: -10px;
+  transform: translate(-50%);
+}
+
+.products {
+  display: flex;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.StripeCheckout {
+  position: absolute;
+  bottom: 150px;
+  left: 50%;
+  outline: none;
+  transform: translate(-50%);
 }
