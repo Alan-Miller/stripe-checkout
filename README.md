@@ -94,3 +94,7 @@ Tech: React and Stripe Checkout.
       );
   });
   ```
+
+  Stripe Checkout docs: https://www.npmjs.com/package/react-stripe-checkout
+
+  NPM docs for `react-stripe-checkout`: https://www.npmjs.com/package/react-stripe-checkout
