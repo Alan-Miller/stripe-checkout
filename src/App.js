@@ -1,17 +1,24 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import StripeCheckout from 'react-stripe-checkout';
+import BuyMyPants from 'react-stripe-checkout';
 import axios from 'axios';
 import './App.css';
 const stripePublicKey = process.env.REACT_APP_STRIPE_PUBLIC_KEY;
 
 class App extends Component {
 
-  onToken = token => {
+  constructor() {
+    super()
+    this.state = {
+      amount: 0
+    }
+  }
+
+  myTokenFunction = token => {
     console.log('token', token);
     token.card = void 0;
-    const amount = 999;
-    axios.post('/api/payment', { token, amount })
+    const amount = this.state.amount;
+    axios.post('/api/payment', { token: token, amount: amount })
       .then(charge => { console.log('charge response', charge.data) });
   }
 
@@ -23,11 +30,14 @@ class App extends Component {
           <h1 className="welcome">Welcome to Stripe Checkout</h1>
         </header>
 
-        <StripeCheckout
-          token={this.onToken}
+        <BuyMyPants
+          token={this.myTokenFunction}
           stripeKey={stripePublicKey}
-          amount={999}
+          amount={this.state.amount}
         />
+        <button onClick={() => this.setState({ amount: 1000 })}>Shirt: $10</button>
+        <button onClick={() => this.setState({ amount: 1700 })}>Pants: $17</button>
+
       </div>
     );
   }
