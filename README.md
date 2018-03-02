@@ -21,18 +21,17 @@
 
 ## **3. Front end**
 
-### **Install `stripe` and `react-stripe-checkout`**: 
-
+#### **Install `stripe` and `react-stripe-checkout`**: 
 ```sh
 npm install stripe react-stripe-checkout
 ```
 
-### **Import `react-stripe-checkout`**
-```js
-import StripeCheckout from 'react-stripe-checkout';
-```
+#### **Import `react-stripe-checkout`**
+  ```js
+  import StripeCheckout from 'react-stripe-checkout';
+  ```
 
-### **Render Stripe Checkout**
+#### **Render Stripe Checkout**
 - In the `stripeKey` prop, pass in the Publishable Key stored in the .env file.
 - Pass in a charge amount to the `amount` prop. In the App.js file, we are passing in 999 cents ($9.99) every time, but the example below shows how you might store the amount in a variable which you then pass in.
 - In the `token` prop, pass in a method that will be called when the used click the Pay button. This method will accept a token from Stripe and the post a payment.
@@ -46,7 +45,7 @@ import StripeCheckout from 'react-stripe-checkout';
 
 ## **4. Back end**
 
-### **Write POST method**
+#### **Write POST method**
 - Write a method to accept a token from Stripe.
 - Use axios to make a POST request to our server, passing back the token and the payment amount in the request body.
 - Notice the two console.logs here. When the user clicks the button and enters information for a payment, two logs should appear in the console. The first is the token created after the used finished with the Stripe form. The second log appears a few moments later after the charge is approved; this charge is logged in the console when it gets back from our server.
@@ -60,14 +59,14 @@ import StripeCheckout from 'react-stripe-checkout';
   }
   ```
 
-### **Require `stripe`**
+#### **Require `stripe`**
 - Require `stripe`.
 - Invoke with your Secret Key.
   ```js
   const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY);
   ```
 
-### **Write the POST endpoint function**
+#### **Write the POST endpoint function**
 - In the function, you may need to convert the amount from the request body using something like the penny converter function used in this sample app.
 - Invoke Stripe's .create() method to create a charge, passing in a configuration objection with `amount`, `currency`, `source`, and `description` properties.
 - The `source` property takes the `id` value on the token we sent in the request body.
