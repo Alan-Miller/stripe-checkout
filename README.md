@@ -94,6 +94,8 @@ npm install stripe react-stripe-checkout
   });
   ```
 
+---
+
 ## Notes
 
   - This demo was based on [Joe Blank's demo](https://github.com/joeblank/react-stripe).
