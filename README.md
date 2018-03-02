@@ -1,4 +1,4 @@
-# Stripe Checkout
+# Stripe Checkout (simple)
 
 ## Overview
 
@@ -18,13 +18,14 @@
 - React only allows front end environment variables if they start with "REACT_APP_". Our Publishable Key will be used in our React front end, so name it something like REACT_APP_STRIPE_PUBLIC_KEY.
 - The Secret Key will be used on the back end, so it does not need "REACT_APP_". Ours will be called STRIPE_PRIVATE_KEY here.
 
-
-## **3. Front end**
-
+## **3. Install** 
 #### **Install `stripe` and `react-stripe-checkout`**: 
 ```sh
 npm install stripe react-stripe-checkout
 ```
+
+
+## **4. Front end**
 
 #### **Import `react-stripe-checkout`**
   ```js
@@ -43,8 +44,6 @@ npm install stripe react-stripe-checkout
   />
   ```
 
-## **4. Back end**
-
 #### **Write POST method**
 - Write a method to accept a token from Stripe.
 - Use axios to make a POST request to our server, passing back the token and the payment amount in the request body.
@@ -59,6 +58,8 @@ npm install stripe react-stripe-checkout
   }
   ```
 
+## **5. Back end**
+
 #### **Require `stripe`**
 - Require `stripe`.
 - Invoke with your Secret Key.
@@ -67,33 +68,34 @@ npm install stripe react-stripe-checkout
   ```
 
 #### **Write POST endpoint function**
-- In the function, you may need to convert the amount from the request body using something like the penny converter function used in this sample app.
-- Invoke Stripe's .create() method to create a charge, passing in a configuration objection with `amount`, `currency`, `source`, and `description` properties.
+- Stripe expects the amount to be in cents. Depending on your app, you may need to convert the amount format using something like the pennyConverter in the `server` folder here. This might be true if your users enter the amount themselves, some typing whole numbers and others decimals. Because this app involves a simple button press and the amount is already in cents, no conversion is needed.
+- Invoke Stripe's `create()` method to create a charge, passing in a configuration objection with `amount`, `currency`, `source`, and `description` properties.
 - The `source` property takes the `id` value on the token we sent in the request body.
-- The .create() method takes a callback. Handle the error parameter.
+- The `create()` method takes a callback. Handle the error parameter.
 - This example sends the entire charge back to the front, where our app logs it to the console.
 
   ```js
   app.post('/api/payment', (req, res, next) => {
-      const amountArray = req.body.amount.toString().split('');
-      const convertedAmt = joesPennyFunction(amountArray);
-      const charge = stripe.charges.create(
-          {
-              amount: convertedAmt,
-              currency: 'usd',
-              source: req.body.token.id,
-              description: 'Stripe Checkout test charge'
-          },
-          function(err, charge) {
-              if (err) return res.sendStatus(500);
-              else return res.sendStatus(200);
-          }
-      );
+    
+    // If needed, convert req.body.amount to pennies
+
+    const charge = stripe.charges.create(
+      {
+        source: req.body.token.id,
+        amount: req.body.amount,
+        currency: 'usd',
+        description: 'Stripe test charge'
+      },
+      function(err, charge) {
+          if (err) return res.sendStatus(500);
+          else return res.sendStatus(200);
+      }
+    );
   });
   ```
 
 ## Notes
 
   - This demo was based on [Joe Blank's demo](https://github.com/joeblank/react-stripe).
-  - [Stripe Checkout docs](https://stripe.com/docs/checkout)
+  - [Stripe Checkout (simple) docs](https://stripe.com/docs/checkout#integration-simple)
   - [`react-stripe-checkout` NPM docs](https://www.npmjs.com/package/react-stripe-checkout)
