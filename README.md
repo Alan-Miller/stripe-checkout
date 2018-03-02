@@ -66,7 +66,7 @@ npm install stripe react-stripe-checkout
   const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY);
   ```
 
-#### **Write the POST endpoint function**
+#### **Write POST endpoint function**
 - In the function, you may need to convert the amount from the request body using something like the penny converter function used in this sample app.
 - Invoke Stripe's .create() method to create a charge, passing in a configuration objection with `amount`, `currency`, `source`, and `description` properties.
 - The `source` property takes the `id` value on the token we sent in the request body.
