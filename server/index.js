@@ -9,6 +9,9 @@ app.use(bodyParser.json());
 app.use(express.static(`${__dirname}/../build`));
 
 app.post('/api/payment', (req, res, next) => {
+
+    // If needed, convert req.body.amount to pennies
+
     const charge = stripe.charges.create(
         {
             amount: req.body.amount,
