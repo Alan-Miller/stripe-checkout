@@ -30,20 +30,24 @@ class App extends Component {
       <div className="App">
         <header className="header">
           <img src={pantsW} className="logo" alt="logo" />
-          <h1 className="welcome">Buy My Pants</h1>
+          <h1 className="welcome">Stripe Checkout</h1>
         </header>
 
-        <div className="products">
-          <div className="pants"
+
+        <div className="products">{/* BUY MY PANTS */}
+
+          <div className="pants" 
             style={{ backgroundImage: `url(${pants})` }}
             onClick={() => this.setState({ amount: 1700, product: 'Pants' })}>
             <span>Pants: $24</span>
           </div>
+
           <div className="shirt"
             style={{ backgroundImage: `url(${shirt})` }}
             onClick={() => this.setState({ amount: 1000, product: 'Shirt' })}>
             <span>Shirt: $11</span>
           </div>
+
         </div>
 
         {
